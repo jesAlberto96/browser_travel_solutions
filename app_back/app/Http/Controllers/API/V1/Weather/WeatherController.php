@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1\Weather;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\API;
-use App\Repositories\WeatherRepository;
+use App\Repositories\WeatherHistoricRepository;
 use App\Http\Controllers\ResponseController;
 
 class WeatherController extends Controller
@@ -14,7 +14,7 @@ class WeatherController extends Controller
     {
         $this->response = new ResponseController;
         $this->API = new API;
-        $this->weatherRepository = new WeatherRepository;
+        $this->weatherHistoricRepository = new WeatherHistoricRepository;
     }
 
     public function getWheater($query)
@@ -22,7 +22,7 @@ class WeatherController extends Controller
         try {
             $response = json_decode($this->API->GET("https://api.openweathermap.org/data/2.5/weather?q=$query&APPID=63b93d38aa11f6d8547e1dde018e5a89"));
 
-            $this->weatherRepository->create([
+            $this->weatherHistoricRepository->create([
                 "query" => $query,
                 "response" => json_encode($response),
                 "code" => $response->cod,
@@ -39,6 +39,6 @@ class WeatherController extends Controller
     }
 
     public function getAll(){
-        return $this->response->sendResponse($this->weatherRepository->getAll());
+        return $this->response->sendResponse($this->weatherHistoricRepository->getAll());
     }
 }

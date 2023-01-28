@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\RequestWeatherHistoric;
 
-class WeatherRepository
+class WeatherHistoricRepository
 {
 
     public function getAll() 
